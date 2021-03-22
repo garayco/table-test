@@ -47,7 +47,8 @@ const Dashboard = ({ children }) => {
   return (
     <Layout style={{ height: "100vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" />
+        <div className="logo"> {/* OL Software */}</div>
+
         <Menu
           mode="inline"
           defaultSelectedKeys={["1"]}

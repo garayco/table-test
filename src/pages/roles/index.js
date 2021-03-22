@@ -56,40 +56,69 @@ const Roles = () => {
   const [filterData, setFilterData] = useState({});
   const [showModal, setShowModal] = useState(false);
 
+  const _filterData = (data, filters) => {
+    const { first, last, id, rol, state, phone, email } = filters;
+    let auxDataFirst = data.filter(
+      (user) => user.first.toLowerCase().indexOf(first.toLowerCase()) > -1
+    );
+    if (auxDataFirst.length < 1) return auxDataFirst;
+    let auxDataLast = auxDataFirst.filter(
+      (user) => user.last.toLowerCase().indexOf(last.toLowerCase()) > -1
+    );
+    if (auxDataLast.length < 1) return auxDataLast;
+    let auxDataId = auxDataLast.filter(
+      (user) => user.id.toLowerCase().indexOf(id.toLowerCase()) > -1
+    );
+    if (auxDataId.length < 1) return auxDataId;
+    let auxDataRol = auxDataId.filter((user) => user.rol === rol);
+    if (auxDataRol.length < 1) return auxDataRol;
+    let auxDataState = auxDataRol.filter((user) => user.state === state);
+    if (auxDataState.length < 1) return auxDataState;
+    let auxDataPhone = auxDataState.filter(
+      (user) => user.phone.toLowerCase().indexOf(phone.toLowerCase()) > -1
+    );
+    if (auxDataPhone.length < 1) return auxDataPhone;
+    let auxDataEmail = auxDataPhone.filter(
+      (user) => user.email.toLowerCase().indexOf(email.toLowerCase()) > -1
+    );
+
+    return auxDataEmail;
+  };
+
   useEffect(() => {
     let auxData = [...data];
     if (filterData) {
       const { first, last, id, rol, state, phone, email } = filterData;
       console.log(filterData.first);
 
-      if (first)
-        setDataSource(
-          auxData.filter((user) => {
-            user.first = user.name.first;
-            user.last = user.name.last;
-            console.log(user);
-            console.log(user.state);
-            console.log(state);
-            console.log(user.first.toLowerCase().indexOf(first.toLowerCase()));
+      /* 
+      setDataSource(
+         auxData.filter((user) => {
+          user.first = user.name.first;
+          user.last = user.name.last;
+          console.log(user);
+          console.log(user.state);
+          console.log(state);
+          console.log(user.first.toLowerCase().indexOf(first.toLowerCase())); 
 
-            if (
-              /*      first !== "" && */
+           if (
+                    first !== "" && 
               user.first.toLowerCase().indexOf(first.toLowerCase()) > -1 &&
-              /*      state !== "" && */
+                  state !== "" && 
               user.state.toLowerCase().indexOf(state.toLowerCase()) > -1
             ) {
               console.log("retorna true");
               return true;
             }
             console.log("retorna falso");
-            return false;
+            return false; 
 
-            /*         console.log(user.rol.toLowerCase() === rol.toLowerCase());
+                   console.log(user.rol.toLowerCase() === rol.toLowerCase());
           console.log(
             user.name.first?.toLowerCase().indexOf(name?.toLowerCase()) > -1
-          ); */
+          ); 
 
-            /* if (
+           if (
             user.name.first?.toLowerCase().indexOf(name?.toLowerCase()) > -1 ||
             user.name.last?.toLowerCase().indexOf(last?.toLowerCase()) > -1 ||
             user.id.value?.toLowerCase().indexOf(id?.toLowerCase()) > -1 ||
@@ -100,9 +129,9 @@ const Roles = () => {
           ) {
             console.log("retorna true");
             return true;
-          } */
-          })
-        );
+          } 
+        })
+      ); */
     } else {
       setDataSource(data);
     }
@@ -155,7 +184,12 @@ const Roles = () => {
     <>
       <div style={{ display: "flex" }}>
         <h2>Usuarios existentes</h2>
-        <Button onClick={() => setShowModal(true)}>Crear</Button>
+        <Button
+          style={{ position: "absolute", right: "3em" }}
+          onClick={() => setShowModal(true)}
+        >
+          Crear
+        </Button>
       </div>
 
       <div style={{ display: "flex" }}>
